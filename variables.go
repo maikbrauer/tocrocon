@@ -6,7 +6,8 @@ const baseURL = "https://login.microsoftonline.com/"
 const tokenPath = "/oauth2/v2.0/token"
 
 var TokenURL = baseURL + os.Getenv("tenant_id") + tokenPath
-var ClientSecret = os.Getenv("client_secret")
+
+var SecretManagerName = os.Getenv("secretmanager_name")
 var ClientID = os.Getenv("client_id")
 var scope = ClientID + "/.default offline_access"
 
@@ -17,11 +18,13 @@ type Tokens struct {
 }
 
 type AuthorizationConfig struct {
-	AuthCode    string
+	Code        string
 	RedirectURI string
+	GrantType   string
 }
 
 type ApiData struct {
-	AuthCode    string `json:"authcode"`
+	Code        string `json:"code"`
 	RedirectURI string `json:"redirect_uri"`
+	GrantType   string `json:"grant_type"`
 }
