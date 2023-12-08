@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 )
@@ -12,6 +11,7 @@ func main() {
 }
 
 func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+
 	var apidata ApiData
 	err := json.Unmarshal([]byte(request.Body), &apidata)
 	if err != nil {
@@ -19,8 +19,9 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	}
 
 	var requestParams = AuthorizationConfig{
-		AuthCode:    apidata.AuthCode,
+		Code:        apidata.Code,
 		RedirectURI: apidata.RedirectURI,
+		GrantType:   apidata.GrantType,
 	}
 
 	_token, err := GetTokens(requestParams)
@@ -34,7 +35,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		Expiry:       _token.Expiry,
 	}
 
-	a_json, err := json.Marshal(ResponseData)
+	aJson, err := json.Marshal(ResponseData)
 
 	if err != nil {
 		panic(err)
@@ -42,7 +43,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	response := events.APIGatewayProxyResponse{
 		StatusCode: 200,
-		Body:       string(a_json),
+		Body:       string(aJson),
 	}
 	return response, nil
 }

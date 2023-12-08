@@ -1,0 +1,5 @@
+{
+    "code": "GAQABAAEAAAAmoFfGt..................",
+    "redirect_uri": "http://localhost:58433",
+    "grant_type": "urn:ietf:params:oauth:grant-type:device_code"
+}
