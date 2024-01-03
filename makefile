@@ -1,11 +1,15 @@
 default: help
 
 build:
-	GOARCH=amd64 GOOS=linux	CGO_ENABLED=0 go build .
-	zip main.zip main
-	mkdir -p bin
-	mv main.zip bin/
-	rm main
+	env GOOS=linux go build -ldflags="-s -w" -o main .
+	mkdir -p bin/
+	zip bin/main.zip main
+	rm bin/main
+
+build-only-binary:
+	env GOOS=linux go build -ldflags="-s -w" -o main .
+	mkdir -p bin/
+	mv main bin/
 
 test:
 	go test -v ./...

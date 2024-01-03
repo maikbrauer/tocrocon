@@ -3,23 +3,29 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/pkg/errors"
 	"io/ioutil"
 	"net/http"
 	"net/url"
+
+	"github.com/pkg/errors"
 )
 
 func GetTokens(c AuthorizationConfig) (t Tokens, err error) {
 
-	fmt.Println(c.GrantType)
-	fmt.Println(c.Code)
-	fmt.Println(c.RedirectURI)
+	if debugmode == "true" {
+		fmt.Println("GrantType: ", c.GrantType)
+		fmt.Println("Code: ", c.Code)
+		fmt.Println("RedirectURI: ", c.RedirectURI)
+	}
 
 	var formVals = url.Values{}
 	formVals.Set("client_secret", getSecretData("eu-central-1"))
 	formVals.Set("client_id", ClientID)
-	fmt.Println(formVals.Encode())
-	fmt.Println("grant", c.GrantType)
+
+	if debugmode == "true" {
+		fmt.Println("FormVals: ", formVals.Encode())
+		fmt.Println("grant", c.GrantType)
+	}
 
 	if c.GrantType == "authorization_code" {
 		formVals.Set("code", c.Code)
@@ -36,8 +42,10 @@ func GetTokens(c AuthorizationConfig) (t Tokens, err error) {
 
 	response, err := http.PostForm(TokenURL, formVals)
 
-	fmt.Println(formVals.Encode())
-	fmt.Println(TokenURL)
+	if debugmode == "true" {
+		fmt.Println("Formvals 2nd: ", formVals.Encode())
+		fmt.Println("TokenURL: ", TokenURL)
+	}
 
 	if err != nil {
 		return t, errors.Wrap(err, "error while trying to get tokens")
@@ -53,6 +61,8 @@ func GetTokens(c AuthorizationConfig) (t Tokens, err error) {
 	if err != nil {
 		return t, errors.Wrap(err, "error while trying to parse token json body")
 	}
+
+	fmt.Println("GrantType: ", c.GrantType, " processing successfull!")
 
 	return
 }

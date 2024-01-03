@@ -10,6 +10,7 @@ var TokenURL = baseURL + os.Getenv("tenant_id") + tokenPath
 var SecretManagerName = os.Getenv("secretmanager_name")
 var ClientID = os.Getenv("client_id")
 var scope = ClientID + "/.default offline_access"
+var debugmode = os.Getenv("debugmode")
 
 type Tokens struct {
 	AccessToken  string `json:"access_token"`
