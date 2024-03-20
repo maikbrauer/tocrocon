@@ -4,6 +4,7 @@ import "os"
 
 const baseURL = "https://login.microsoftonline.com/"
 const tokenPath = "/oauth2/v2.0/token"
+const version = "0.0.5-beta"
 
 var TokenURL = baseURL + os.Getenv("tenant_id") + tokenPath
 
