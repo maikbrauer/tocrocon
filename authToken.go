@@ -19,7 +19,6 @@ func GetTokens(c AuthorizationConfig) (t Tokens, err error) {
 	}
 
 	var formVals = url.Values{}
-	formVals.Set("client_secret", getSecretData("eu-central-1"))
 	formVals.Set("client_id", ClientID)
 
 	if debugmode == "true" {
@@ -28,6 +27,7 @@ func GetTokens(c AuthorizationConfig) (t Tokens, err error) {
 	}
 
 	if c.GrantType == "authorization_code" {
+		formVals.Set("client_secret", getSecretData("eu-central-1"))
 		formVals.Set("code", c.Code)
 		formVals.Set("grant_type", c.GrantType)
 		formVals.Set("redirect_uri", c.RedirectURI)
@@ -36,6 +36,7 @@ func GetTokens(c AuthorizationConfig) (t Tokens, err error) {
 		formVals.Set("grant_type", c.GrantType)
 		formVals.Set("device_code", c.Code)
 	} else if c.GrantType == "refresh_token" {
+		formVals.Set("client_secret", getSecretData("eu-central-1"))
 		formVals.Set("grant_type", c.GrantType)
 		formVals.Set("refresh_token", c.Code)
 	}
@@ -60,6 +61,14 @@ func GetTokens(c AuthorizationConfig) (t Tokens, err error) {
 	err = json.Unmarshal(body, &t)
 	if err != nil {
 		return t, errors.Wrap(err, "error while trying to parse token json body")
+	}
+
+	if debugmode == "true" {
+		str1 := fmt.Sprintf("%s", body)
+		fmt.Println("Complete Body Response =", str1)
+		fmt.Println("AccessToken: ", t.AccessToken)
+		fmt.Println("RefreshToken: ", t.RefreshToken)
+		fmt.Println("Expiry: ", t.Expiry)
 	}
 
 	fmt.Println("GrantType: ", c.GrantType, " processing successfull!")
