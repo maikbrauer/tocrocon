@@ -65,6 +65,7 @@ func GetTokens(c AuthorizationConfig) (t Tokens, err error) {
 
 	if debugmode == "true" {
 		str1 := fmt.Sprintf("%s", body)
+		fmt.Println("Tocrocon-Version:", version)
 		fmt.Println("Complete Body Response =", str1)
 		fmt.Println("AccessToken: ", t.AccessToken)
 		fmt.Println("RefreshToken: ", t.RefreshToken)
