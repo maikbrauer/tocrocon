@@ -54,6 +54,10 @@ func GetTokens(c AuthorizationConfig) (t Tokens, err error) {
 
 	body, err := ioutil.ReadAll(response.Body)
 
+	if debugmode == "true" {
+		fmt.Println("Response-Body: ", body)
+	}
+
 	if err != nil {
 		return t, errors.Wrap(err, "error while trying to read token json body")
 	}
