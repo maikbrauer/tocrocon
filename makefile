@@ -7,9 +7,9 @@ build:
 	rm bootstrap
 
 build-only-binary:
-	env GOOS=linux go build -ldflags="-s -w" -o main .
+	env GOOS=linux go build -ldflags="-s -w" -o bootstrap .
 	mkdir -p bin/
-	mv main bin/
+	mv bootstrap bin/
 
 test:
 	go test -v ./...
