@@ -1,15 +1,15 @@
 default: help
 
 build:
-	env GOOS=linux go build -ldflags="-s -w" -o main .
+	env GOOS=linux go build -ldflags="-s -w" -o bootstrap .
 	mkdir -p bin/
-	zip bin/main.zip main
-	rm bin/main
+	zip bin/bootstrap.zip bootstrap
+	rm bootstrap
 
 build-only-binary:
-	env GOOS=linux go build -ldflags="-s -w" -o main .
+	env GOOS=linux go build -ldflags="-s -w" -o bootstrap .
 	mkdir -p bin/
-	mv main bin/
+	mv bootstrap bin/
 
 test:
 	go test -v ./...
