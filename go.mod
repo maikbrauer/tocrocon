@@ -5,7 +5,7 @@ go 1.22.4
 require github.com/aws/aws-lambda-go v1.47.0
 
 require (
-	github.com/aws/aws-sdk-go-v2 v1.29.0
+	github.com/aws/aws-sdk-go-v2 v1.30.0
 	github.com/aws/aws-sdk-go-v2/config v1.27.20
 	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.31.0
 	github.com/pkg/errors v0.9.1
